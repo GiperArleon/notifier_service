@@ -12,7 +12,7 @@ public class NotificationService {
 
     public static boolean checkTracksForLeads() {
         try {
-            UserArray users = soapRoaterNotifyService.getUsersWithoutTracks(1);
+            UserArray users = soapRoaterNotifyService.getUsersWithoutTracks(0);
             List<User> list = users.getItem();
             String message = "сегодня не делали записей:\n" + list.stream()
                     .map(t -> String.format("%s %s", t.getUsername(), t.getSurname()))
@@ -27,7 +27,7 @@ public class NotificationService {
 
     public static boolean checkTracksForLectors() {
         try {
-            UserArray users = soapRoaterNotifyService.getUsersWithoutTracks(3);
+            UserArray users = soapRoaterNotifyService.getUsersWithoutTracks(2);
             List<User> list = users.getItem();
             String message = "не делали записей в течении трех дней:\n" + list.stream()
                     .map(t -> String.format("%s %s", t.getUsername(), t.getSurname()))
