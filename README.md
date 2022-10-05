@@ -1,1 +1,2 @@
-# notifier_service
+# notifier service
+сервис нотификатор
