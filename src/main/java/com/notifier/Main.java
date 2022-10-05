@@ -17,12 +17,16 @@ public class Main {
     static final int POOL_SIZE = 2;
 
     public static void main(String[] args) {
-        log.info("* * *");
-        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(POOL_SIZE);
-        scheduler.scheduleAtFixedRate(new LeadsThread(), Utils.initialDelayMinutes(CHECK_LEADS_TIME), Utils.MINUTES_IN_DAY, TimeUnit.MINUTES);
-        scheduler.scheduleAtFixedRate(new LectorsThread(), Utils.initialDelayMinutes(CHECK_LECTORS_TIME), Utils.MINUTES_IN_DAY, TimeUnit.MINUTES);
+        try {
+            log.info("* * *");
+            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(POOL_SIZE);
+            scheduler.scheduleAtFixedRate(new LeadsThread(), Utils.initialDelayMinutes(CHECK_LEADS_TIME), Utils.MINUTES_IN_DAY, TimeUnit.MINUTES);
+            scheduler.scheduleAtFixedRate(new LectorsThread(), Utils.initialDelayMinutes(CHECK_LECTORS_TIME), Utils.MINUTES_IN_DAY, TimeUnit.MINUTES);
 
-        Endpoint endpoint = Endpoint.create(new NotificatorReportServiceImpl());
-        endpoint.publish("http://localhost:8033/notification");
+            Endpoint endpoint = Endpoint.create(new NotificatorReportServiceImpl());
+            endpoint.publish("http://localhost:8033/notification");
+        } catch(Throwable e) {
+            log.error(e.toString());
+        }
     }
 }
